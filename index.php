@@ -6,7 +6,7 @@ $s3 = Aws\S3\S3Client::factory(array(
 			'version' => 'latest',
 			'region'  => 'us-east-2'));
 
-$bucket = getenv('BUCKET')?: die('No "S3_BUCKET" config var in found in env!'); //S3_BUCKET --> BUCKET
+$bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!'); //S3_BUCKET --> BUCKET
 var_dump($bucket);
 ?>
 <html>
