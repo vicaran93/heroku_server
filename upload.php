@@ -20,6 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
  } catch(Exception $e) {
          echo "Upload error";
         //<p>Upload error :(</p>
+        
  } }
 
 ?>
