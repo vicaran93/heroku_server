@@ -10,7 +10,7 @@
 		//not working
 
 		echo is_callable('shell_exec');
-        content = "name_from_python";
+        $content = "name_from_python";
 		$result = shell_exec('python process_img.py ' . escapeshellarg($content));
         if (empty($result)) {
             echo '$result is either 0, empty, or not set at all';
