@@ -19,6 +19,7 @@ try {
     echo "Keys retrieved!\n";
     foreach ($objects as $object) {
         echo $object['Key'] . "\n";
+        // Store names in a variable
         // Display the object in the browser
         //header("Content-Type: {$object['ContentType']}");
         //echo $object['Body'];
