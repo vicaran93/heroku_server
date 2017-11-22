@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
     try {
         // get filename
         $file_name = $_FILES['userfile']['name'];
-        echo "Image received:  " . $file_name."<br>";
+        echo "Image received:  " . $file_name."\n";
 
 
         $objects = $s3->getIterator('ListObjects', array(

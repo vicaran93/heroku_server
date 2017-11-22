@@ -18,7 +18,14 @@ response = requests.post(final_url, data=payload)
 
 print(response.text) #TEXT/HTML
 print(response.status_code, response.reason) #HTTP
-'''
+payload = {
+    'userfile': img,
+    'Content-type' : 'multipart/form-data'
+}
+
+payload = {'userfile': ('test.jpg', open(final_path, 'rb'), 'image/jpg')}
+#('images', ('test.jpg', open('foo.png', 'rb'), 'image/jpg'))
+response = requests.post(final_url, data=payload)'''
 
 with open(final_path, 'rb') as f: response = requests.post(final_url, files={'userfile': f})
 print(response.text) #TEXT/HTML
