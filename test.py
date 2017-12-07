@@ -30,7 +30,7 @@ def main():
     img = read_image_server(sys.argv[1])
     
     #template = read_image_server(sys.argv[2])
-    print(sys.argv[1], sys.argv[2]) 
+    #print(sys.argv[1], sys.argv[2]) 
     #return 0
     #template_matching(img, template)
 
