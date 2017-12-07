@@ -1,7 +1,7 @@
 import cv2
 import sys
 from PIL import Image
-import urllib2 as urllib
+import urllib
 import io
 
 #from skimage import io
