@@ -6,20 +6,26 @@ import io
 from skimage import io
 
 def template_matching(img, template, url1, url2):  
-    res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    try:
+        res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
-    if min_val < 0.1:
-        print ('Yes', url1, url2)
-        print('')
-        print('')
-        print('')
-    else:
-        print ('No', url1, url2)
-        print('')
-        print('')
-        print('')
-    
+        if min_val < 0.1:
+            print ('Yes', url1, url2)
+            print('')
+            print('')
+            print('')
+        else:
+            print ('No', url1, url2)
+            print('')
+            print('')
+            print('')
+    except:
+            print ('No', url1, url2)
+            print('')
+            print('')
+            print('')
+
 def read_image_server(URL):
     hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
