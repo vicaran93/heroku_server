@@ -12,34 +12,47 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
     try {
         // get filename
         $file_name = $_FILES['userfile']['name'];
-        echo "Image received:  " . $file_name."\n";
+        echo "Image received:  " . $file_name."<br>";
 
+	$file = $_FILES['userfile'];
+	
+        $website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/";
 
+	//$upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
+	
+	$full_name = $website.$file_name;
         $objects = $s3->getIterator('ListObjects', array(
             'Bucket' => $bucket
         ));
 
-        foreach ($objects as $object) {
-            // Store names in variable
-            $arr[] = $object['Key'];
+        //foreach ($objects as $object) {
+		$image_name = $website."2017-12-07_0047_cropped_bw.jpg";
+		$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
+		if (empty($result)) {
+			$testing = '$result is either 0, empty, or not set at all';
+		 	echo $testing."<br>";
+	    	}
+		else{
+	       	  echo $result."<br>";
+	    	}
+	//}
+		$image_name = $website."test1_cropped.jpg";
+		$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
+		if (empty($result)) {
+			$testing = '$result is either 0, empty, or not set at all';
+		 	echo $testing."<br>";
+	    	}
+		else{
+	       	  echo $result."<br>";
+	    	}
 
-        }
+	//	echo "Images in server: ";
+	//	print_r(array_values($arr));
 
-		echo "Images in server: ";
-		print_r(array_values($arr));
+	//	echo "Testing Python program";
 
-		echo "Testing Python program";
-
-		$content = "name_from_python";
-		$result = shell_exec('python process_img.py ' . escapeshellarg($content));
-        if (empty($result)) {
-            echo '$result is either 0, empty, or not set at all';
-        }
-        else{
-            echo $result;
-        }
-
-
+	//	$content = "name_from_python";
+		//$result = shell_exec('python process_img.py ' . escapeshellarg($content)." ".escapeshellarg($file);
 
  } catch(Exception $e) {
          echo "Error detected";
