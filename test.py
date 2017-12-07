@@ -36,7 +36,7 @@ def read_image_server(URL):
     
     req = urlopen(URL)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-    f = cv2.imdecode(arr, -1)
+    f = cv2.imdecode(arr, cv2.IMREAD_UNCHANGED)
     print (type(f), type(f[0,0])) 
  #   f = f.astype(np.uint8)
     #try THIS REQUEST EVERYTIME
