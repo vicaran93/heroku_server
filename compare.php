@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
             'Bucket' => $bucket
         ));
 
-        foreach ($objects as $object) {
+        //foreach ($objects as $object) {
 		$image_name = $website."coins.png";
 		$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
 		if (empty($result)) {
@@ -35,7 +35,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 		else{
 	       	  echo $result."<br>";
 	    	}
-	}
+	//}
+		$image_name = $website."test1_cropped.jpg";
+		$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
+		if (empty($result)) {
+			$testing = '$result is either 0, empty, or not set at all';
+		 	echo $testing."<br>";
+	    	}
+		else{
+	       	  echo $result."<br>";
+	    	}
 
 	//	echo "Images in server: ";
 	//	print_r(array_values($arr));
