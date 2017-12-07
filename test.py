@@ -4,7 +4,7 @@ from PIL import Image
 import urllib.request
 import io
 from skimage import io
-import numpy as np
+#import numpy as np
 
 def template_matching(img, template, url1, url2):  
     try:
@@ -32,7 +32,7 @@ def read_image_server(URL):
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
     
     f = io.imread(URL, headers=hdr)
-    f = f.astype(np.uint8)
+ #   f = f.astype(np.uint8)
     #try THIS REQUEST EVERYTIME
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
