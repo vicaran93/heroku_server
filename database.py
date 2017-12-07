@@ -128,10 +128,13 @@ def read_image_server(URL):
 def main():
     rads, num_of_circles, num_of_images = 4, 2000, 300
    # test = json.load(open(r'C:\Users\SDP\Documents\Database/result.txt'))   
-    
+    print (sys.argv[1]) 
     img = read_image_server(sys.argv[1])
+    print (img[0, 0, :])    
+
     template = sys.argv[2] 
-    
+    print (template.shape)
+     
     min_val = template_matching(img, template)
 
     create_images = False

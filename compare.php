@@ -24,14 +24,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
             // Store names in variable
             $arr[] = $object['Key'];
 	    $result = shell_exec('python database.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($file));
-	    echo $result;
+	    echo $result."<br>";
 
 
 		 if (empty($result)) {
 			 echo '$result is either 0, empty, or not set at all';
 			}
 		 else{
-			echo $result;
+	    		echo $result."<br>";
 		     }
 
 		}
