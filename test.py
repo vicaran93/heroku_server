@@ -31,7 +31,7 @@ def read_image_server(URL):
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
     
     f = io.imread(URL, headers=hdr)
-
+    #try THIS REQUEST EVERYTIME
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
     #f = Image.open(image_file)

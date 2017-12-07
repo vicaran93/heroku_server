@@ -39,7 +39,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 	    		echo $result."<br>";
 		     }
 
+		sleep(1)
+
 		}
+		
 
 	//	echo "Images in server: ";
 	//	print_r(array_values($arr));
