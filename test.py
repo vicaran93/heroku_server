@@ -5,7 +5,6 @@ import urllib.request
 import io
 from skimage import io
 
-#from skimage import io
 def template_matching(img, template):  
     res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
@@ -29,10 +28,10 @@ def read_image_server(URL):
 def main():
     img = read_image_server(sys.argv[1])
     
-    #template = read_image_server(sys.argv[2])
+    template = read_image_server(sys.argv[2])
     #print(sys.argv[1], sys.argv[2]) 
     #return 0
-    #template_matching(img, template)
+    template_matching(img, template)
 
 if __name__ == '__main__':
     main()
