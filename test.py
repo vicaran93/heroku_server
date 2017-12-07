@@ -5,14 +5,14 @@ import urllib.request
 import io
 from skimage import io
 
-def template_matching(img, template):  
+def template_matching(img, template, url1, url2):  
     res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
     if min_val < 0.1:
-        print ('Yes')
+        print ('Yes', url1, url2)
     else:
-        print ('No')
+        print ('No', url1, url2)
     
 def read_image_server(URL):
     hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
@@ -31,7 +31,7 @@ def main():
     template = read_image_server(sys.argv[2])
     #print(sys.argv[1], sys.argv[2]) 
     #return 0
-    template_matching(img, template)
+    template_matching(img, template, sys.argv[1], sys.argv[2])
 
 if __name__ == '__main__':
     main()

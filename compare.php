@@ -28,8 +28,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
-	    echo $website.$object['Key']."<br>";
-	    echo $full_name."<br>";
 	    $result = shell_exec("python test.py " . escapeshellarg($website.$object['Key'])." ".escapeshellarg($full_name));
 	    echo $result."<br>";
 
