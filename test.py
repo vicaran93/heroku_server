@@ -1,5 +1,6 @@
 import cv2
 import sys
+from skimage import io
 
 def template_matching(img, template):
     """
@@ -24,7 +25,6 @@ def read_image_server(URL):
     hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
     
-    from skimage import io
     f = io.imread(URL, headers=hdr)
     return cv2.cvtColor(f, cv2.COLOR_RGB2BGR)
 
@@ -32,7 +32,7 @@ def main():
     img = read_image_server(sys.argv[1])
     template = read_image_server(sys.argv[2])
     print(sys.argv[2]) 
-    return
+    return 0
     template_matching(img, template)
 
 if __name__ == '__main__':
