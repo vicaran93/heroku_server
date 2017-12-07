@@ -1,10 +1,10 @@
 import cv2
 import sys
-#from skimage import io
 from PIL import Image
 import urllib2 as urllib
 import io
 
+#from skimage import io
 def template_matching(img, template):  
     res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
