@@ -29,12 +29,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
             // Store names in variable
             $arr[] = $object['Key'];
 	    $result = shell_exec("python test.py " . escapeshellarg($website."coins.png")." ".escapeshellarg($full_name));
-	    sleep(1);
 	    echo $result."<br>";
 
+	    sleep(1);
 
 	    if (empty($result)) {
-		 echo '$result is either 0, empty, or not set at all'.'<br>';
+		 echo '$result is either 0, empty, or not set at all <br>';
 	    }
 	    else{
 	         echo $result."<br>";
