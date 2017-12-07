@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         $file_name = $_FILES['userfile']['name'];
         echo "Image received:  " . $file_name."\n";
 
+	$file = $_FILES['userfile'];
 
         $objects = $s3->getIterator('ListObjects', array(
             'Bucket' => $bucket
@@ -22,24 +23,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
+	    $result = shell_exec('python process_img.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($file));
+	    echo $result;
 
-        }
 
-		echo "Images in server: ";
+		 if (empty($result)) {
+			 echo '$result is either 0, empty, or not set at all';
+			}
+		 else{
+			echo $result;
+		     }
+
+		}
+
+	//	echo "Images in server: ";
 		print_r(array_values($arr));
 
-		echo "Testing Python program";
+	//	echo "Testing Python program";
 
-		$content = "name_from_python";
-		$result = shell_exec('python process_img.py ' . escapeshellarg($content));
-        if (empty($result)) {
-            echo '$result is either 0, empty, or not set at all';
-        }
-        else{
-            echo $result;
-        }
-
-
+	//	$content = "name_from_python";
+		//$result = shell_exec('python process_img.py ' . escapeshellarg($content)." ".escapeshellarg($file);
 
  } catch(Exception $e) {
          echo "Error detected";
