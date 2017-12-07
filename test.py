@@ -4,6 +4,7 @@ from PIL import Image
 import urllib.request
 import io
 from skimage import io
+import numpy as np
 
 def template_matching(img, template, url1, url2):  
     try:
