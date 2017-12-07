@@ -23,7 +23,7 @@ def read_image_server(URL):
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
     #f = Image.open(image_file)
-    return cv2.cvtColor(f, cv2.COLOR_RGB2BGR)
+    return f
 
 def main():
     img = read_image_server(sys.argv[1])
