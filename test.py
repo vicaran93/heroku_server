@@ -19,12 +19,7 @@ def read_image_server(URL):
     hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
     
-    for i in range(10):
-        try:
-            f = io.imread(URL, headers=hdr)
-            flag = 1
-        except:
-            flag = 0            
+    f = io.imread(URL, headers=hdr)
 
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
