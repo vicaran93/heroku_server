@@ -31,7 +31,8 @@ def read_image_server(URL):
 def main():
     img = read_image_server(sys.argv[1])
     template = read_image_server(sys.argv[2])
-    print('sup') 
+    print(sys.argv[2]) 
+    return
     template_matching(img, template)
 
 if __name__ == '__main__':
