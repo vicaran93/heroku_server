@@ -9,7 +9,6 @@ $s3 = Aws\S3\S3Client::factory(array(
 $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env! We cannot access  server database!'); //S3_BUCKET --> BUCKET in local server
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-    // FIXME: add more validation, e.g. using ext/fileinfo
     try {
         // get filename
         $file_name = $_FILES['userfile']['name'];
@@ -28,6 +27,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 
 		echo "Images in server: ";
 		print_r(array_values($arr));
+
+		echo "Testing Python program";
+
+		$content = "name_from_python";
+		$result = shell_exec('python process_img.py ' . escapeshellarg($content));
+        if (empty($result)) {
+            echo '$result is either 0, empty, or not set at all';
+        }
+        else{
+            echo $result;
+        }
+
 
 
  } catch(Exception $e) {
