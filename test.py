@@ -37,7 +37,7 @@ def read_image_server(URL):
     req = urlopen(URL)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
     f = cv2.imdecode(arr, -1)
-    
+    print (type(img), type(img[0,0])) 
  #   f = f.astype(np.uint8)
     #try THIS REQUEST EVERYTIME
     #fd = urllib.request.urlopen(URL)
@@ -52,7 +52,7 @@ def main():
 
     #print(sys.argv[1], sys.argv[2]) 
     #return 0
-    template_matching(img, template, sys.argv[1], sys.argv[2])
+    #template_matching(img, template, sys.argv[1], sys.argv[2])
 
 if __name__ == '__main__':
     main()
