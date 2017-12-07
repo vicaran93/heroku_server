@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         ));
 
         //foreach ($objects as $object) {
-		$image_name = $website."coins.png";
+		$image_name = $website."test1_cropped.jpg";
 		echo $image_name."<br>";
 		$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
 		echo $image_name."<br>";
