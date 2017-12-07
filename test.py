@@ -11,8 +11,14 @@ def template_matching(img, template, url1, url2):
   
     if min_val < 0.1:
         print ('Yes', url1, url2)
+        print('')
+        print('')
+        print('')
     else:
         print ('No', url1, url2)
+        print('')
+        print('')
+        print('')
     
 def read_image_server(URL):
     hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
