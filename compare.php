@@ -28,10 +28,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
-	    $result = shell_exec("python test.py " . escapeshellarg($website."coins.png")." ".escapeshellarg($full_name));
+	    $result = shell_exec("python test.py " . escapeshellarg($website.$object['Key'])." ".escapeshellarg($full_name));
 	    echo $result."<br>";
 
-	    //sleep(1);
+	    sleep(1);
 
 	    if (empty($result)) {
 		 echo '$result is either 0, empty, or not set at all <br>';
