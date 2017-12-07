@@ -26,7 +26,7 @@ def read_image_server(URL):
     return cv2.cvtColor(f, cv2.COLOR_RGB2BGR)
 
 def main():
-    img = read_image_server(sys.argv[1])
+#    img = read_image_server(sys.argv[1])
     template = read_image_server(sys.argv[2])
     print(sys.argv[2]) 
     return 0
