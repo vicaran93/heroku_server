@@ -30,7 +30,7 @@ def read_image_server(URL):
 
 def main():
     img = read_image_server(sys.argv[1])
-    template = sys.argv[2] 
+    template = read_image_server(sys.argv[2])
     
     template_matching(img, template)
 

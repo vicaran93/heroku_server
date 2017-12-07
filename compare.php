@@ -15,7 +15,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         echo "Image received:  " . $file_name."<br>";
 
 	$file = $_FILES['userfile'];
+	
+	$website = "https://s3.console.aws.amazon.com/s3/object/access-lh18-bucket/"	
 
+        $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
+	
+	$full_name = $website.$file_name
         $objects = $s3->getIterator('ListObjects', array(
             'Bucket' => $bucket
         ));
@@ -23,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
-	    $result = shell_exec('python test.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($file));
+	    $result = shell_exec('python test.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($full_name));
 	    echo $result."<br>";
 
 
