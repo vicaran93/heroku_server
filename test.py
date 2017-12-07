@@ -35,12 +35,13 @@ def read_image_server(URL):
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
     #f = Image.open(image_file)
-    return f
+    return f.astype(np.uint8)
 
 def main():
-    img = read_image_server(sys.argv[1])
     
+    img = read_image_server(sys.argv[1])
     template = read_image_server(sys.argv[2])
+
     #print(sys.argv[1], sys.argv[2]) 
     #return 0
     template_matching(img, template, sys.argv[1], sys.argv[2])
