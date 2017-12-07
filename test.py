@@ -37,7 +37,7 @@ def read_image_server(URL):
     req = urlopen(URL)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
     f = cv2.imdecode(arr, -1)
-    print (type(img), type(img[0,0])) 
+    print (type(f), type(f[0,0])) 
  #   f = f.astype(np.uint8)
     #try THIS REQUEST EVERYTIME
     #fd = urllib.request.urlopen(URL)
