@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 	
         $website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/";
 
-	$upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
+	//$upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
 	
 	$full_name = $website.$file_name;
         $objects = $s3->getIterator('ListObjects', array(
@@ -28,7 +28,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
-	    $result = shell_exec("python test.py " . escapeshellarg($website.$object['Key'])." ".escapeshellarg($full_name));
+	    $result = shell_exec("python test.py " . escapeshellarg($website."coins.png")." ".escapeshellarg($full_name));
+	    sleep(1);
 	    echo $result."<br>";
 
 
@@ -38,8 +39,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 	    else{
 	         echo $result."<br>";
 	    }
-
-	    sleep(1);
 
        }
 		
