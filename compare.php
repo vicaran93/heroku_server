@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
     try {
         // get filename
         $file_name = $_FILES['userfile']['name'];
-        echo "Image received:  " . $file_name."\n";
+        echo "Image received:  " . $file_name."<br>";
 
 	$file = $_FILES['userfile'];
 
@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         foreach ($objects as $object) {
             // Store names in variable
             $arr[] = $object['Key'];
-	    $result = shell_exec('python process_img.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($file));
+	    $result = shell_exec('python database.py ' . escapeshellarg($object['Key'])." ".escapeshellarg($file));
 	    echo $result;
 
 
@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 		}
 
 	//	echo "Images in server: ";
-		print_r(array_values($arr));
+	//	print_r(array_values($arr));
 
 	//	echo "Testing Python program";
 
