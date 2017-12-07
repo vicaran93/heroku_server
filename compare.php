@@ -26,6 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         ));
 
 	$image_name = $website."coins.png";
+	echo $image_name."<br>";
 	$result = shell_exec("python test.py " . escapeshellarg($image_name)." ".escapeshellarg($full_name));
 	if (empty($result)) {
 		 echo '$result is either 0, empty, or not set at all <br>';
