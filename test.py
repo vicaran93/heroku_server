@@ -34,3 +34,5 @@ def main():
     print('sup') 
     template_matching(img, template)
 
+if '__name__' == __main__:
+    main()
