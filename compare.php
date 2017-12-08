@@ -27,17 +27,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 	$string = "";	
 
         foreach ($objects as $object) {
-		$string = $string.$object['Key']." ";
+		echo $object['Key'];
+	//	$string = $string.$object['Key']." ";
 	}
 	
-	$result = shell_exec("python test.py " . escapeshellarg($string));
-	if (empty($result)) {
-		$testing = '$result is either 0, empty, or not set at all';
-		echo $testing."<br>";
-	}
-	else{
-	  echo $result."<br>";
-	}
+	//$result = shell_exec("python test.py " . escapeshellarg($string));
+	//if (empty($result)) {
+	//	$testing = '$result is either 0, empty, or not set at all';
+	//	echo $testing."<br>";
+	//}
+	//else{
+	// echo $result."<br>";
+	//}
 
 	//	echo "Images in server: ";
 	//	print_r(array_values($arr));
