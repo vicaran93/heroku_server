@@ -3,9 +3,10 @@ import sys
 from PIL import Image
 import urllib.request
 import io
-from skimage import io
+#from skimage import io
 import numpy as np
 from urllib.request import urlopen
+import time
 
 def template_matching(img, template, url1, url2):  
     try:
@@ -13,32 +14,19 @@ def template_matching(img, template, url1, url2):
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
         if min_val < 0.1:
-            print ('Yes', url1, url2)
-            print('')
-            print('')
-            print('')
+            print ('Found a Match!', url1, url2)
         else:
-            print ('No', url1, url2)
-            print('')
-            print('')
-            print('')
+            print ('Nope', url1, url2)
     except:
-            print ('No', url1, url2)
-            print('')
-            print('')
-            print('')
+            print ('Something went wrong', url1, url2)
 
 def read_image_server(URL):
-    hdr = {'User-Agent': 'Chrome/23.0.1271.64 Safari/537.11',
-       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
-    
  #   f = io.imread(URL, headers=hdr)
     
     req = urlopen(URL)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
     f = cv2.imdecode(arr, cv2.IMREAD_UNCHANGED)
-    #print (type(f), type(f[0,0])) 
- #   f = f.astype(np.uint8)
+
     #try THIS REQUEST EVERYTIME
     #fd = urllib.request.urlopen(URL)
     #image_file = io.BytesIO(fd.read())
@@ -46,13 +34,30 @@ def read_image_server(URL):
     return f
 
 def main():
-    
-    img = read_image_server(sys.argv[1])
-    template = read_image_server(sys.argv[2])
+    website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/"
+    try:
+        template = read_image_server(website+'template.png')
+    except:
+        print ("Couldn't read the template")
+        return
 
-    #print(sys.argv[1], sys.argv[2]) 
-    #return 0
-    template_matching(img, template, sys.argv[1], sys.argv[2])
+    try:
+        image_list = sys.argv[1].split()
+    except:
+        print ('list not given properly')
+        return
+
+    try:
+        t0 = time.clock()
+        for link in image_list: 
+            img = read_image_server(link)
+            template_matching(img, template, link, website+'template.jpg')
+    except:
+        print ('Something went wrong in template matching')
+        return
+
+    t1 = time.clock()
+    print('Average time: %2.5f'%(t1-t0)/len(image_list))
 
 if __name__ == '__main__':
     main()
