@@ -12,18 +12,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['test_var']) ) {
     try {
         //echo "Uploading..";
         $test = $_POST['test_var'];
-        echo "success: ".$test;
+
         $objects = $s3->getIterator('ListObjects', array(
             'Bucket' => $bucket
         ));
-
+		$arr=array();
         foreach ($objects as $object) {
             //echo $object['Key'] . "\n";
-            arr[] = $object['Key'];
+            $arr[] = $object['Key'];
         }
 
+
+        echo "Success\n";
+        echo "Received: ".$test."\n";
         print_r(array_values($arr));
-        echo " S3"; // "success S3
+
 
  } catch(Exception $e) {
          echo "Upload error";
