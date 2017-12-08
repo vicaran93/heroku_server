@@ -50,19 +50,16 @@ def main():
         print ('list not given properly')
         return
 
-    try:
-        t0 = time.clock()
-        for link in image_list: 
-            img = read_image_server(website+link)
-            template_matching(img, template, link)
-        t1 = time.clock()
-        print('Average time: %2.5f'%(t1-t0)/len(image_list))
-    except:
-        print ('Something went wrong in template matching')
-        return
-
+    t0 = time.clock()
+    for link in image_list: 
+        img = read_image_server(website+link)
+        template_matching(img, template, link)
     t1 = time.clock()
     print('Average time: %2.5f'%(t1-t0)/len(image_list))
+    #except:
+    #    print ('Something went wrong in template matching')
+    #    return
+
 
 if __name__ == '__main__':
     main()
