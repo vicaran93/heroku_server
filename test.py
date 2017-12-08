@@ -14,9 +14,9 @@ def template_matching(img, template, url1, url2):
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
         if min_val < 0.1:
-            print ('Found a Match!', url1, url2)
+            print ('Found a Match!', url1, url2,'\n')
         else:
-            print ('Nope', url1, url2)
+            print ('Nope', url1, url2,'\n')
     except:
             print ('Something went wrong', url1, url2)
 

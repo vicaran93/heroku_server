@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 		echo $testing."<br>";
 	}
 	else{
-	 echo $result."<br>";
+	 echo $result;
 	}
 
 	//	echo "Images in server: ";
