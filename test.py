@@ -8,17 +8,17 @@ import numpy as np
 from urllib.request import urlopen
 import time
 
-def template_matching(img, template, url1, url2):  
+def template_matching(img, template, url1):  
     try:
         res = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
         if min_val < 0.1:
-            print ('Found a Match!', url1, url2,'\n')
+            print ('Found a Match!', url1, '\n')
         else:
-            print ('Nope', url1, url2,'\n')
+            print ('Nope', url1, '\n')
     except:
-            print ('Something went wrong', url1, url2)
+            print ('Something went wrong', url1)
 
 def read_image_server(URL):
  #   f = io.imread(URL, headers=hdr)
@@ -54,7 +54,9 @@ def main():
         t0 = time.clock()
         for link in image_list: 
             img = read_image_server(website+link)
-            template_matching(img, template, link, website+'template.png')
+            template_matching(img, template, link)
+        t1 = time.clock()
+        print('Average time: %2.5f'%(t1-t0)/len(image_list))
     except:
         print ('Something went wrong in template matching')
         return
