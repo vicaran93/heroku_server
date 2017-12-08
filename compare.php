@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
     try {
         // get filename
         $file_name = $_FILES['userfile']['name'];
-        echo "Image received:  " . $file_name."<br>";
+        echo "Image received:  " . $file_name." ";
 
 	$file = $_FILES['userfile'];
 	
@@ -27,10 +27,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
 	$string = "";	
 
         foreach ($objects as $object) {
-		echo $object['Key'];
-	//	$string = $string.$object['Key']." ";
+		$string = $string.$object['Key']." ";
 	}
-	
+	echo $string;	
 	//$result = shell_exec("python test.py " . escapeshellarg($string));
 	//if (empty($result)) {
 	//	$testing = '$result is either 0, empty, or not set at all';

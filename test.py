@@ -43,6 +43,8 @@ def main():
 
     try:
         image_list = sys.argv[1].split()
+        del image_list[0]; del image_list[1]; del image_list[2]
+        
     except:
         print ('list not given properly')
         return
