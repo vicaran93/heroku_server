@@ -8,14 +8,23 @@ $s3 = Aws\S3\S3Client::factory(array(
 
 $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!'); //S3_BUCKET --> BUCKET
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['test_var']) ) {
     try {
         //echo "Uploading..";
-        $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
-        echo "Upload successful";
-        //echo $upload->get('ObjectURL')
+        $test = $_POST['test_var'];
+        echo "success: ".$test;
+        $objects = $s3->getIterator('ListObjects', array(
+            'Bucket' => $bucket
+        ));
 
-        //<p>Upload <a href="<?=htmlspecialchars($upload->get('ObjectURL'))? >">successful</a> :)</p>
+        foreach ($objects as $object) {
+            //echo $object['Key'] . "\n";
+            arr[] = $object['Key'];
+        }
+
+        print_r(array_values($arr));
+        echo " S3"; // "success S3
+
  } catch(Exception $e) {
          echo "Upload error";
         //<p>Upload error :(</p>
