@@ -43,7 +43,7 @@ def main():
 
     try:
         image_list = sys.argv[1].split()
-        del image_list[0]; del image_list[1]; del image_list[2]
+        #del image_list[0]; del image_list[1]; del image_list[2]
         
     except:
         print ('list not given properly')
@@ -52,8 +52,8 @@ def main():
     try:
         t0 = time.clock()
         for link in image_list: 
-            img = read_image_server(link)
-            template_matching(img, template, link, website+'template.jpg')
+            img = read_image_server(website+link)
+            template_matching(img, template, link, website+'template.png')
     except:
         print ('Something went wrong in template matching')
         return
