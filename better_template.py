@@ -69,7 +69,7 @@ def main():
     #print template.shape[0], template.shape[1]
     template = Image.fromarray(template)
     #template.show()
-    template.save(path+"template.png")
+    template.save(path+"template.jpg")
     
 if __name__ == "__main__":
     main()

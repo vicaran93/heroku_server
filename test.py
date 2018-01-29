@@ -36,14 +36,14 @@ def read_image_server(URL):
 def main():
     website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/"
     try:
-        template = read_image_server(website+'template.png')
+        template = read_image_server(website+'template.jpg')
     except:
         print ("Couldn't read the template")
         return
 
     try:
         image_list = sys.argv[1].split()
-        image_list.remove('template.png')
+        image_list.remove('template.jpg')
         #del image_list[0]; del image_list[1]; del image_list[2]
         
     except:
