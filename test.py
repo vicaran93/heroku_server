@@ -36,7 +36,7 @@ def read_image_server(URL):
 def main():
     website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/"
     try:
-        template = read_image_server(website+'template.jpg')
+        template = np.array(read_image_server(website+'template.jpg'))
     except:
         print ("Couldn't read the template")
         return
@@ -53,7 +53,7 @@ def main():
     t0 = time.clock()
 
     for link in image_list: 
-        img = read_image_server(website+link)
+        img = np.array(read_image_server(website+link))
         template_matching(img, template, link)
 
     t1 = time.clock()
