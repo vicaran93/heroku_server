@@ -13,7 +13,7 @@ def template_matching(img, template, url1):
         res = cv2.matchTemplate(img, template, cv2.TM_CCORR_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
   
-        if max_val > 0.35:
+        if max_val > 0.3:
             print ('Found a Match!', url1, '\n')
         else:
             print ('Nope', url1, '\n')
