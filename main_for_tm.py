@@ -30,7 +30,7 @@ def main():
     
     # Runs the template match based on set centers and rotations
     t0 = time.time()    
-    min_center, min_degree, min_score = ftm.fast_template_match(im, template, centers, rotations, True)
+    min_center, min_degree, min_score = ftm.fast_template_match(im, template, centers, rotations)
     t1 = time.time()
     
     print ("Runtime: %2.5f"%float(t1-t0))
