@@ -115,7 +115,7 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
         returned = max(one_lvl, key= lambda item: item[1][1]) 
         min_center, min_degree, min_score = returned[0], returned[1][0], returned[1][1]  
     
-    print SAD_scores.items()
+    #print SAD_scores.items()
     return min_center, min_degree, min_score
 
 def template_matching(img, template, box=False):  
