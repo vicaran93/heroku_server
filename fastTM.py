@@ -207,8 +207,8 @@ def main():
     #center = get_center(path_to_template)
     centers = get_centers(centers, 5)
     
-    print 'Image shape:', im.shape
-    print 'Template shape:', template.shape
+    print ('Image shape:', im.shape)
+    print ('Template shape:', template.shape)
     im = pre_process(im)
     template = pre_process(template)
     t0 = time.time()
@@ -217,17 +217,17 @@ def main():
     t1 = time.time()
     
     if correlation_f is False:
-        print '\n'
-        print "Min degree: %1.1f"%min_degree
-        print "Min score: %2.4f"%min_score
-        print "Min center: %s"%(min_center,)
-        print "Runtime: %2.5f"%float(t1-t0)
+        print ('\n')
+        print ("Min degree: %1.1f"%min_degree)
+        print ("Min score: %2.4f"%min_score)
+        print ("Min center: %s"%(min_center,))
+        print ("Runtime: %2.5f"%float(t1-t0))
     else:
-        print '\n'
-        print "Max degree: %1.1f"%min_degree
-        print "Max score: %2.4f"%min_score
-        print "Max center: %s"%(min_center,)
-        print "Runtime: %2.5f"%float(t1-t0)
+        print ('\n')
+        print ("Max degree: %1.1f"%min_degree)
+        print ("Max score: %2.4f"%min_score)
+        print ("Max center: %s"%(min_center,))
+        print ("Runtime: %2.5f"%float(t1-t0))
     
     #plt.figure()
     #plt.imshow(im, cmap='gray')    
