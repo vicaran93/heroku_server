@@ -126,7 +126,7 @@ def template_matching(img, template, box=False):
     
     if box:
         print ('Max val for tm = %2.5f'%max_val)
-        print "Center (row, col): (%d, %d)"%(round(max_loc[1]+h/2), round(max_loc[0]+w/2))
+        print ("Center (row, col): (%d, %d)"%(round(max_loc[1]+h/2), round(max_loc[0]+w/2)))
         top_left = max_loc
         bottom_right = (top_left[0] + w, top_left[1] + h)
         cv2.rectangle(img, top_left, bottom_right, 255, 2)
