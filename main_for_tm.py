@@ -26,7 +26,7 @@ def main():
     template = read_image_server(website+'template.jpg')
     
     # Center & Rotations
-    rotations = np.arange(-2, 2, 0.2)
+    rotations = np.arange(-2, 2, 0.5)
     center = read_center(website+'location.txt')
     centers = ftm.get_centers(center, 2)
     
