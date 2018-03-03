@@ -3,14 +3,14 @@ import numpy as np
 import time
 from skimage import io
 import fastTM as ftm
-import urllib
+import urllib.request
 
 def read_image_server(URL):
     f = io.imread(URL)
     return f
 
 def read_center(URL):
-    for line in urllib.urlopen(URL):
+    for line in urllib.request.urlopen(URL):
         item = line.split()
     center = (int(item[0]), int(item[1]))
     return center
