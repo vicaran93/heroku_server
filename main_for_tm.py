@@ -6,9 +6,7 @@ import fastTM as ftm
 import urllib
 
 def read_image_server(URL):
-
     f = io.imread(URL)
-    
     return f
 
 def read_center(URL):
@@ -35,7 +33,7 @@ def main():
     min_center, min_degree, min_score = ftm.fast_template_match(im, template, centers, rotations, True)
     t1 = time.time()
     
-    print "Runtime: %2.5f"%float(t1-t0)
+    print ("Runtime: %2.5f"%float(t1-t0))
     if min_score > 0.5:
         print ('Found a match!')
         print ('ID: %s ; Confidence Level: %1.4f'%(website+sys.argv[1], min_score))
