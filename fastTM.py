@@ -106,14 +106,14 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
                 SAD_scores[center][round(degree, 2)] = correlation(im, template, center, degree)
                 
     #min_center, min_ = max(SAD_scores.items(), key= lambda (key, val): max(val.items(), key= lambda (key2, val2): val2))
-    #if correlation_f is False:
-    #    one_lvl = [(key_, min(val_.items(), key= lambda (key2, val2): val2)) for (key_, val_) in SAD_scores.items()]
-    #    returned = min(one_lvl, key= lambda item: item[1][1]) 
-    #    min_center, min_degree, min_score = returned[0], returned[1][0], returned[1][1]    
-    #else:
-    one_lvl = [(key_, max(val_.items(), key= lambda (key2, val2): val2)) for (key_, val_) in SAD_scores.items()]
-    returned = max(one_lvl, key= lambda item: item[1][1]) 
-    min_center, min_degree, min_score = returned[0], returned[1][0], returned[1][1]  
+    if correlation_f is False:
+        one_lvl = [(key_, min(val_.items(), key= lambda item: item[1])) for (key_, val_) in SAD_scores.items()]
+        returned = min(one_lvl, key= lambda item: item[1][1]) 
+        min_center, min_degree, min_score = returned[0], returned[1][0], returned[1][1]    
+    else:
+        one_lvl = [(key_, max(val_.items(), key= lambda item: item[1])) for (key_, val_) in SAD_scores.items()]
+        returned = max(one_lvl, key= lambda item: item[1][1]) 
+        min_center, min_degree, min_score = returned[0], returned[1][0], returned[1][1]  
     
     #print SAD_scores.items()
     return min_center, min_degree, min_score
