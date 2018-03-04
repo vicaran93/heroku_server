@@ -38,7 +38,7 @@ def main():
         print ('Found a match!')
         print ('ID: %s ; Confidence Level: %1.4f%%'%(website+sys.argv[1], min_score*100))
     else:
-        print ('Not a match for ID: %s ; Confidence Level: %1.4f'%(website+sys.argv[1], min_score))
+        print ('Not a match for ID: %s ; Confidence Level: %3.4f'%(website+sys.argv[1], min_score))
     
 
 if __name__ == '__main__':
