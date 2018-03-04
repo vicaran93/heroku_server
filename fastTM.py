@@ -96,7 +96,7 @@ def get_center(path):
     return cent 
 
 def get_centers(center, search_interval):
-    return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval, 1) for j in np.arange(-search_interval, search_interval, 1)]
+    return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval+1, 1) for j in np.arange(-search_interval, search_interval+1, 1)]
 
 def read_centers(path_to_centers):
     with open(path_to_centers, 'r') as f_cent:
@@ -105,7 +105,12 @@ def read_centers(path_to_centers):
     content = [cent.strip() for cent in content]
     centers = [(int(cent.split()[0]), int(cent.split()[1])) for cent in content]
     return centers
-    
+
+def pre_process(im):
+    im.setflags(write=1)
+    im[np.where(im >= 255/2.)] = 255
+    im[np.where(im < 255/2)] = 0
+    return im   
     
     
     

@@ -24,9 +24,12 @@ def main():
     template = read_image_server(website+'template.jpg')
     
     # Center & Rotations
-    rotations = np.arange(-2, 2, 0.5)
+    rotations = np.arange(-2, 2.5, 0.5)
     center = read_center(website+'location.txt')
     centers = ftm.get_centers(center, 2)
+    
+    im = ftm.pre_process(im)
+    template = ftm.pre_process(template)
     
     # Runs the template match based on set centers and rotations
     t0 = time.time()    
