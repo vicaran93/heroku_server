@@ -8,9 +8,7 @@ def SAD(im, template, center, degree):
     samples = np.where(template >= 200)
     rad = degree*np.pi/180. 
     
-    #temp_im = imrotate(im, degree)
     temp_im = im
-    #temp_im = rotate_image(im, center, degree)
     
     t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
     transformed_samples = np.around(np.dot(t_mat, np.array([samples[0], samples[1], len(samples[1])*[1]])))
@@ -40,7 +38,6 @@ def correlation(im, template, center, degree):
     # Get white pixel locations
     samples = np.where(template >= 200)
     rad = degree*np.pi/180. 
-    
     
     t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
     
@@ -97,12 +94,6 @@ def get_center(path):
     cent[1] = cent[1][:-4]
     cent = tuple([int(item) for item in cent])
     return cent 
-
-def pre_process(im):
-    im.setflags(write=1)
-    im[np.where(im >= 255/2.)] = 255
-    im[np.where(im < 255/2)] = 0
-    return im
 
 def get_centers(center, search_interval):
     return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval, 1) for j in np.arange(-search_interval, search_interval, 1)]
