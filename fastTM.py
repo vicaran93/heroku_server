@@ -65,7 +65,7 @@ def correlation(im, template, center, degree):
     return correlation
     
 def fast_template_match(im, template, centers, rotations, correlation_f=True):
-    SAD_scores = {center: {round(degree, 2): np.inf for degree in rotations} for center in centers}
+    SAD_scores = {center: {round(degree, 2): 0 for degree in rotations} for center in centers}
     break_flag = False
     
     for center in centers:
