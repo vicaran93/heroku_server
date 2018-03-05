@@ -42,13 +42,13 @@ def main():
         print (min_score)
         print (min_degree)
         print (min_center[0], min_center[1])
-        print (center)
+        print (center[0], center[1])
     else:
         print ('Not a match for ID: %s ; Confidence Level: %3.4f'%(website+sys.argv[1], min_score))
         print (min_score)
         print (min_degree)
         print (min_center[0], min_center[1])
-        print (center)
+        print (center[0], center[1])
 
 if __name__ == '__main__':
     main()
