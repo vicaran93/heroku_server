@@ -66,14 +66,20 @@ def correlation(im, template, center, degree):
     
 def fast_template_match(im, template, centers, rotations, correlation_f=True):
     SAD_scores = {center: {round(degree, 2): np.inf for degree in rotations} for center in centers}
-
+    break_flag = False
+    
     for center in centers:
         for degree in rotations:
             if correlation_f is False:
                 SAD_scores[center][round(degree, 2)] = SAD(im, template, center, degree)
             else:
                 SAD_scores[center][round(degree, 2)] = correlation(im, template, center, degree)
-                
+                if SAD_scores[center][round(degree, 2)] > 0.9:
+                    break_flag = True
+                    break
+        if break_flag:
+            break
+        
     #min_center, min_ = max(SAD_scores.items(), key= lambda (key, val): max(val.items(), key= lambda (key2, val2): val2))
     if correlation_f is False:
         one_lvl = [(key_, min(val_.items(), key= lambda item: item[1])) for (key_, val_) in SAD_scores.items()]
@@ -95,8 +101,8 @@ def get_center(path):
     cent = tuple([int(item) for item in cent])
     return cent 
 
-def get_centers(center, search_interval):
-    return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval+1, 1) for j in np.arange(-search_interval, search_interval+1, 1)]
+def get_centers(center, search_interval, step):
+    return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval+step, step) for j in np.arange(-search_interval, search_interval+step, step)]
 
 def read_centers(path_to_centers):
     with open(path_to_centers, 'r') as f_cent:

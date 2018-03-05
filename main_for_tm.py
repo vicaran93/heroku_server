@@ -24,9 +24,9 @@ def main():
     template = read_image_server(website+'template.jpg')
     
     # Center & Rotations
-    rotations = np.arange(-2, 2.5, 0.5)
+    rotations = np.arange(-1.5, 2.0, 0.5)
     center = read_center(website+'location.txt')
-    centers = ftm.get_centers(center, 2)
+    centers = ftm.get_centers(center, 100, 10)
     
     im = ftm.pre_process(im)
     template = ftm.pre_process(template)
@@ -49,7 +49,6 @@ def main():
         print (min_degree)
         print (min_center)
         print (center)
-    
 
 if __name__ == '__main__':
     main()
