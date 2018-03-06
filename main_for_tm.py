@@ -38,13 +38,13 @@ def main():
     
     print ("Runtime: %2.5f seconds"%float(t1-t0))
     if min_score > 0.5:
-        print ('Found a match!; ID: %s ; Confidence Level: %1.4f%%'%(website+sys.argv[1], min_score*100))
+        print ('Found a match!; ID: %s ; Confidence Level: %1.4f%%'%(sys.argv[1], min_score*100))
         print (min_score)
         print (min_degree)
         print (min_center[0], min_center[1])
         print (center[0], center[1])
     else:
-        print ('Not a match for ID: %s ; Confidence Level: %3.4f'%(website+sys.argv[1], min_score))
+        print ('Not a match for ID: %s ; Confidence Level: %3.4f'%(sys.argv[1], min_score))
         print (min_score)
         print (min_degree)
         print (min_center[0], min_center[1])
