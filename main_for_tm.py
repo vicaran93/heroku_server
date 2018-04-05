@@ -25,7 +25,8 @@ def main():
     
     # Center & Rotations
     rotations = np.arange(-1.5, 2.0, 0.5)
-    center = read_center(website+'location.txt')
+    # center = read_center(website+'location.txt')
+    center = (im.shape[0]/2, im.shape[1]/2)
     centers = ftm.get_centers(center, 100, 10)
     
     im = ftm.pre_process(im)
@@ -44,7 +45,7 @@ def main():
         print (min_center[0], min_center[1])
         print (center[0], center[1])
     else:
-        print ('Not a match for ID: %s ; Confidence Level: %3.4f'%(sys.argv[1], min_score))
+        print ('Not a match for ID: %s ; Confidence Level: %1.4f'%(sys.argv[1], min_score*100))
         print (min_score)
         print (min_degree)
         print (min_center[0], min_center[1])
