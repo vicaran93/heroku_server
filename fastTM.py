@@ -36,7 +36,7 @@ def correlation(im, template, center, degree):
     rows_t, cols_t = template.shape
     
     # Get white pixel locations
-    samples = np.where(template >= 200)
+    samples = np.where(template == 255)
     rad = degree*np.pi/180. 
     
     t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
@@ -49,8 +49,8 @@ def correlation(im, template, center, degree):
     samples = (samples[0][keep_mask], samples[1][keep_mask])
     transformed_samples = (np.array(transformed_samples[0, keep_mask], dtype=np.int64), np.array(transformed_samples[1, keep_mask], dtype=np.int64))
 
-    correlation = np.sum(im[transformed_samples])
-    normalizer = np.sqrt( np.sum(template[samples]*correlation))
+    correlation = np.sum( (im[transformed_samples] == 255).astype(int))
+    normalizer = np.sqrt( np.sum( ((template[samples] == 255).astype(int))*correlation))
     
     if normalizer != 0:
         correlation = correlation/normalizer
@@ -112,9 +112,4 @@ def pre_process(im):
     im[np.where(im >= 255/2.)] = 255
     im[np.where(im < 255/2)] = 0
     return im   
-    
-def binary_image(im):
-    im[np.where(im == 255)] = 1
-    im[np.where(im == 0)] = 0
-    return im    
     

@@ -31,8 +31,6 @@ def main():
     
     im = ftm.pre_process(im)
     template = ftm.pre_process(template)
-    template = ftm.binary_image(template)
-    im = ftm.binary_image(im)
     
     # Runs the template match based on set centers and rotations
     t0 = time.time()    
