@@ -1,9 +1,9 @@
 import sys
-import numpy as np
 import time
-from skimage import io
+import numpy as np
 import fastTM as ftm
 import urllib.request
+from skimage import io
 
 def read_image_server(URL):
     f = io.imread(URL)
@@ -25,12 +25,14 @@ def main():
     
     # Center & Rotations
     rotations = np.arange(-1.5, 2.0, 0.5)
-    # center = read_center(website+'location.txt')
+
     center = (im.shape[0]/2, im.shape[1]/2)
     centers = ftm.get_centers(center, 100, 10)
     
     im = ftm.pre_process(im)
     template = ftm.pre_process(template)
+    template = ftm.binary_image(template)
+    im = ftm.binary_image(im)
     
     # Runs the template match based on set centers and rotations
     t0 = time.time()    

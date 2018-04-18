@@ -49,13 +49,8 @@ def correlation(im, template, center, degree):
     samples = (samples[0][keep_mask], samples[1][keep_mask])
     transformed_samples = (np.array(transformed_samples[0, keep_mask], dtype=np.int64), np.array(transformed_samples[1, keep_mask], dtype=np.int64))
 
-    #mean_temp = np.mean(template[samples])
-    #mean_im = np.mean(im[transformed_samples])
-
-    correlation = np.sum( np.multiply(template[samples], im[transformed_samples] ) )
-    #correlation = np.mean( np.multiply(template[samples] - mean_temp, temp_im[transformed_samples] - mean_im) )
-    normalizer = np.sqrt( np.sum( np.square(template[samples]) ) * np.sum( np.square(im[transformed_samples]) ) )
-    #normalizer = np.std(template[samples]) * np.std(temp_im[transformed_samples])
+    correlation = np.sum(im[transformed_samples])
+    normalizer = np.sqrt( np.sum(template[samples]*correlation))
     
     if normalizer != 0:
         correlation = correlation/normalizer
@@ -118,5 +113,8 @@ def pre_process(im):
     im[np.where(im < 255/2)] = 0
     return im   
     
-    
+def binary_image(im):
+    im[np.where(im == 255)] = 1
+    im[np.where(im == 0)] = 0
+    return im    
     
