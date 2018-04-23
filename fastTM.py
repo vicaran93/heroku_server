@@ -178,7 +178,7 @@ def get_transformed_pix(template, center, degree):
     return transformed_samples
 
 
-def correlation_fast(im, template, t_mats, limit = 2500):
+def correlation_fast(im, template, t_mats, limit = 1000):
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
     
