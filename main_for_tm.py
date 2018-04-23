@@ -29,27 +29,24 @@ def main():
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
     
-    # Center & Rotations
-    step_rot = 0.5
-    rotations = np.arange(-2.0, 2.0+step_rot, step_rot) #rotation clockwise and counter clockwise
-
+    # Read first set of transformations
     data = ftm.read_json(path_to_tmat_1)
     t_mats = np.array(data['t_mat'])
         
-    # Run Correlation for every type of transformation
+    # First iteration!
     t0 = time.time()
-    ind, corr_1 = ftm.correlation_fast(im, template, t_mats)
+    ind, corr_1 = ftm.correlation_fast(im, template, t_mats, limit = 1000)
     
     # Best results for first round
     min_center, min_degree = data['transformations'][ind]
     
     # Second iteration!
     step_rot = 0.1
-    rotations = np.arange(-1.0, 1.0+step_rot, step_rot)
-    centers = ftm.get_centers(min_center, 10, 1)
+    rotations = np.arange(-0.5+abs(min_degree), 0.5+abs(min_degree)+step_rot, step_rot)
+    centers = ftm.get_centers(min_center, 5, 1)
     t_mats, transformations = ftm.create_apt_mat(template, centers, rotations, path_to_tmat_1, False)
     
-    ind, corr_2 = ftm.correlation_fast(im, template, t_mats)
+    ind, corr_2 = ftm.correlation_fast(im, template, t_mats, limit = 2500)
     
     # Best results for second round
     min_center, min_degree = transformations[ind]
@@ -68,7 +65,7 @@ def main():
     
     print ("Max degree: %1.1f"%min_degree)
     print ("First round: %1.5f; Second round: %1.5f"%(corr_1, corr_2))
-    print ('Percentage overlap: %1.10f'%(per_overlap))
+    print ('Percentage overlap: %1.5f'%(per_overlap))
     print ("Max center: %s"%(min_center,))
     print ("Translation: (%d, %d)"%(abs(center[0]-min_center[0]), abs(center[1]-min_center[1])))
     print ("Runtime: %2.5f"%float(t1-t0))

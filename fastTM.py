@@ -164,13 +164,18 @@ def pre_process(im):
     return im   
     
 
-def get_transformed_pix(template, center, degree):
+def get_transformed_pix(template, center, degree, limit = 1000):
     rows_t, cols_t = template.shape
     
     # Get white pixel locations
     samples = np.where(template == 255)
     rad = degree*np.pi/180. 
-    
+
+    # Limit number of white pixels
+    if len(samples[0]) > limit:
+        indices = np.random.randint(0, len(samples[1]), size=limit)
+        samples = (samples[0][indices], samples[1][indices])
+        
     t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
 
     transformed_samples = np.around(np.dot(t_mat, np.array([samples[0], samples[1], len(samples[1])*[1]])))
@@ -178,7 +183,7 @@ def get_transformed_pix(template, center, degree):
     return transformed_samples
 
 
-def correlation_fast(im, template, t_mats, limit = 1000):
+def correlation_fast(im, template, t_mats, limit = 2500):
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
     
