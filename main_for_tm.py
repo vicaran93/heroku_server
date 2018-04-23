@@ -17,8 +17,13 @@ def main():
     path_to_tmat_1 = r't_mat_1.json'
     
     # Read image/template from the database
-    im = read_image_server(website+sys.argv[1])
-    template = read_image_server(website+'template.jpg')
+    try:
+        im = read_image_server(website+sys.argv[1])
+        template = read_image_server(website+'template.jpg')
+    except:
+        print ('Searched for: %s'%sys.argv[1])
+        print ('Image or template not there')
+        return
     
     center = (im.shape[0]/2, im.shape[1]/2)
     
