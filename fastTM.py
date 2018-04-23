@@ -185,10 +185,10 @@ def correlation_fast(im, template, t_mats, limit = 2500):
     # Get white pixel locations
     samples = np.where(template == 255)
     
+    # Limit number of white pixels
     if len(samples[0]) > limit:
-        indices = [np.random.randint(min(samples[0]), max(samples[0]), size=(2500)), np.random.randint(min(samples[1]), max(samples[1]), size=(2500))]
-        samples = (samples[0][indices[0]], samples[1][indices[1]])
-        
+        indices = np.random.randint(0, len(samples[1]), size=limit)
+        samples = (samples[0][indices], samples[1][indices])
         
     samples = np.array([samples[0], samples[1], np.array(len(samples[0])*[1])])
     

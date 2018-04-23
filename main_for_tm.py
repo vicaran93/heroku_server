@@ -60,7 +60,7 @@ def main():
     im = ftm.rotate_image(im, min_center, -min_degree)
     
     # Crop image
-    im = im[int(min_center[0])-rows_t/2 : int(min_center[0])+rows_t/2, int(min_center[1])-cols_t/2 : int(min_center[1])+cols_t/2]
+    im = im[int(min_center[0]-rows_t/2) : int(min_center[0]+rows_t/2), int(min_center[1]-cols_t/2) : int(min_center[1]+cols_t/2)]
     normalizer = np.sum( (im == 255).astype(int) )
     per_overlap = overlap/float(normalizer)
     
