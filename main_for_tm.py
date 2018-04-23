@@ -26,6 +26,8 @@ def main():
         return
     
     center = (im.shape[0]/2, im.shape[1]/2)
+    rows_im, cols_im = im.shape
+    rows_t, cols_t = template.shape
     
     # Center & Rotations
     step_rot = 0.5
@@ -55,8 +57,13 @@ def main():
     # Check percentage overlap
     transformed_samples = ftm.get_transformed_pix(template, min_center, min_degree)
     overlap = np.sum( (im[transformed_samples] == 255).astype(int))
-    normalizer = np.sum( (template == 255).astype(int) )
+    im = ftm.rotate_image(im, min_center, -min_degree)
+    
+    # Crop image
+    im = im[min_center[0]-rows_t/2: min_center[0]+rows_t/2, min_center[1]-cols_t/2: min_center[1]+cols_t/2]
+    normalizer = np.sum( (im == 255).astype(int) )
     per_overlap = overlap/float(normalizer)
+    
     t1 = time.time()
     
     print ("Max degree: %1.1f"%min_degree)

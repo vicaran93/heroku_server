@@ -1,6 +1,6 @@
 import json
 import numpy as np
-
+import cv2
 
 def SAD(im, template, center, degree):
     rows_im, cols_im = im.shape
@@ -60,8 +60,15 @@ def create_apt_mat(template, centers, rotations, path, save = True):
         #save_json(save_data, path)
     else:
         return t_mat, transformations
+
     
-    
+def rotate_image(image, center, degree):
+    rows, cols = image.shape
+
+    M = cv2.getRotationMatrix2D(center, degree, 1)
+    dst = cv2.warpAffine(image, M, (cols,rows), flags=cv2.INTER_NEAREST)
+    return dst
+   
 
 def read_json(path):
     with open(path, 'r') as out_file:
