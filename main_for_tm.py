@@ -25,6 +25,7 @@ def main():
     path_to_tmat_1 = r't_mat_1.json'
     
     # Read image/template from the database
+    print (sys.argv[1])
     im = read_image_server(website+sys.argv[1])
     template = read_image_server(website+'template.jpg')
     
