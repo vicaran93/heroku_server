@@ -2,7 +2,6 @@ import sys
 import time
 import numpy as np
 import fastTM as ftm
-import urllib.request
 from skimage import io
 
 
@@ -11,13 +10,6 @@ def read_image_server(URL):
     return f
 
 
-def read_center(URL):
-    for line in urllib.request.urlopen(URL):
-        item = line.split()
-    center = (int(item[0]), int(item[1]))
-    return center
-        
-
 def main():
     assert(len(sys.argv) == 2)
     # Where the database is
@@ -25,9 +17,10 @@ def main():
     path_to_tmat_1 = r't_mat_1.json'
     
     # Read image/template from the database
-    print (sys.argv[1])
     im = read_image_server(website+sys.argv[1])
     template = read_image_server(website+'template.jpg')
+    
+    center = (im.shape[0]/2, im.shape[1]/2)
     
     # Center & Rotations
     step_rot = 0.5
@@ -61,34 +54,13 @@ def main():
     per_overlap = overlap/float(normalizer)
     t1 = time.time()
     
+    print ("Max degree: %1.1f"%min_degree)
+    print ("First round: %1.5f; Second round: %1.5f"%(corr_1, corr_2))
+    print ('Percentage overlap: %1.10f'%(per_overlap))
+    print ("Max center: %s"%(min_center,))
+    print ("Translation: (%d, %d)"%(abs(center[0]-min_center[0]), abs(center[1]-min_center[1])))
+    print ("Runtime: %2.5f"%float(t1-t0))
     
-    if corr_2 > 0.5:
-        print ('Found a match!')
-    else:
-        print ('not a match!')
-    
-#    
-#    im = ftm.pre_process(im)
-#    template = ftm.pre_process(template)
-#    
-#    # Runs the template match based on set centers and rotations
-#    t0 = time.time()    
-#    min_center, min_degree, min_score = ftm.fast_template_match(im, template, centers, rotations)
-#    t1 = time.time()
-#    
-#    print ("Runtime: %2.5f seconds"%float(t1-t0))
-#    if min_score > 0.5:
-#        print ('Found a match!; ID: %s ; Confidence Level: %1.4f%%'%(sys.argv[1], min_score*100))
-#        print (min_score)
-#        print (min_degree)
-#        print (min_center[0], min_center[1])
-#        print (center[0], center[1])
-#    else:
-#        print ('Not a match for ID: %s ; Confidence Level: %1.4f'%(sys.argv[1], min_score*100))
-#        print (min_score)
-#        print (min_degree)
-#        print (min_center[0], min_center[1])
-#        print (center[0], center[1])
 
 if __name__ == '__main__':
     main()
