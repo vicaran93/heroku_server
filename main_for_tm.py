@@ -22,7 +22,7 @@ def main():
     assert(len(sys.argv) == 2)
     # Where the database is
     website = "https://s3.us-east-2.amazonaws.com/access-lh18-bucket/"
-    path_to_tmat_1 = r'C:\Users\Hassaan\Desktop\School related\Fall 2017\SDP/t_mat_1.json'
+    path_to_tmat_1 = r't_mat_1.json'
     
     # Read image/template from the database
     im = read_image_server(website+sys.argv[1])
