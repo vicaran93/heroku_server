@@ -33,6 +33,36 @@ def SAD(im, template, center, degree):
     return sad
 
 
+def create_apt_mat(template, centers, rotations, path, save = True):
+    rads = np.array(rotations)*np.pi/180.
+    rows_t, cols_t = template.shape
+
+    # Transformation matrices
+    t_mat = np.zeros( (len(centers)*len(rotations), 3, 3) )
+  
+    save_data = {}
+    transformations = []
+    # Filling out transformation matrices
+    counter = 0
+    for center in centers:
+        for i, rad in enumerate(rads):
+            
+            t_mat[counter, :, :] = np.array([ [np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], 
+                                              [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)],
+                                              [0, 0, 1] ])
+            counter += 1
+            
+            transformations.append( (center, rotations[i]) )
+
+    if save:
+        save_data['t_mat'] = t_mat.tolist()
+        save_data['transformations'] = transformations
+        #save_json(save_data, path)
+    else:
+        return t_mat, transformations
+    
+    
+
 def read_json(path):
     with open(path, 'r') as out_file:
         data = json.load(out_file)
