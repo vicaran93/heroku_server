@@ -1,4 +1,6 @@
+import json
 import numpy as np
+
 
 def SAD(im, template, center, degree):
     rows_im, cols_im = im.shape
@@ -29,7 +31,13 @@ def SAD(im, template, center, degree):
         sad = 1.0
 
     return sad
-    
+
+
+def read_json(path):
+    with open(path, 'r') as out_file:
+        data = json.load(out_file)
+    return data
+
     
 def correlation(im, template, center, degree):
     rows_im, cols_im = im.shape
@@ -59,6 +67,7 @@ def correlation(im, template, center, degree):
 
     return correlation
     
+
 def fast_template_match(im, template, centers, rotations, correlation_f=True):
     SAD_scores = {center: {round(degree, 2): 0 for degree in rotations} for center in centers}
     break_flag = False
@@ -88,6 +97,7 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
     #print SAD_scores.items()
     return min_center, min_degree, min_score
 
+
 def get_center(path):
     cent = path.split('/')
     cent = cent[-1]
@@ -96,8 +106,10 @@ def get_center(path):
     cent = tuple([int(item) for item in cent])
     return cent 
 
+
 def get_centers(center, search_interval, step):
     return [(center[0]+i, center[1]+j) for i in np.arange(-search_interval, search_interval+step, step) for j in np.arange(-search_interval, search_interval+step, step)]
+
 
 def read_centers(path_to_centers):
     with open(path_to_centers, 'r') as f_cent:
@@ -107,9 +119,49 @@ def read_centers(path_to_centers):
     centers = [(int(cent.split()[0]), int(cent.split()[1])) for cent in content]
     return centers
 
+
 def pre_process(im):
     im.setflags(write=1)
     im[np.where(im >= 255/2.)] = 255
     im[np.where(im < 255/2)] = 0
     return im   
     
+
+def get_transformed_pix(template, center, degree):
+    rows_t, cols_t = template.shape
+    
+    # Get white pixel locations
+    samples = np.where(template == 255)
+    rad = degree*np.pi/180. 
+    
+    t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
+
+    transformed_samples = np.around(np.dot(t_mat, np.array([samples[0], samples[1], len(samples[1])*[1]])))
+    transformed_samples = (np.array(transformed_samples[0, :], dtype=np.int64), np.array(transformed_samples[1, :], dtype=np.int64))
+    return transformed_samples
+
+
+def correlation_fast(im, template, t_mats):
+    rows_im, cols_im = im.shape
+    rows_t, cols_t = template.shape
+    
+    # Get white pixel locations
+    samples = np.where(template == 255)
+    samples = np.array([samples[0], samples[1], np.array(len(samples[0])*[1])])
+    
+    # Transformed pixels
+    transformed_samples = np.around( np.dot(t_mats, samples) )
+    transformed_samples = transformed_samples[:, 0:2, :]
+    transformed_samples = [ (transformed_samples[i, 0, :].astype(np.int32), transformed_samples[i, 1, :].astype(np.int32)) for i in range(transformed_samples.shape[0])]
+
+    # Correlation calculation
+    correlation = [np.sum( (im[transformed_samples[i]] == 255).astype(int) ) for i in range(t_mats.shape[0])]
+    normalizer = [np.sqrt(samples.shape[1]*correlation[i]) for i in range(t_mats.shape[0])]
+    
+    correlation = [c/float(n) for c, n in zip(correlation, normalizer) if n != 0]
+
+    ind, max_corr = max(enumerate(correlation), key= lambda item: item[1])
+    return ind, max_corr
+
+
+
