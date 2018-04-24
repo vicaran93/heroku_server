@@ -29,7 +29,7 @@ def main():
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
     
-    template = template[rows_t/4:3*rows_t/4, cols_t/4:3*cols_t/4].copy()
+    template = template[int(rows_t/4):int(3*rows_t/4), int(cols_t/4):int(3*cols_t/4)].copy()
     
     center = (im.shape[0]/2, im.shape[1]/2)
     
