@@ -141,11 +141,15 @@ def correlation_fast_pieces_main(im, template, t_mats):
     
     # How many pieces of 2000 white samples we want to use
     correlation_scores = {}
-    for i in range(div):
-        piece_samples = (samples[0][i*divisor : (i+1)*divisor], samples[1][i*divisor : (i+1)*divisor])
-        correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
-        if correlation_scores[i][1] > 0.9:
-            return correlation_scores[i]
+    if div != 0:
+        for i in range(div):
+            piece_samples = (samples[0][i*divisor : (i+1)*divisor], samples[1][i*divisor : (i+1)*divisor])
+            correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
+            print ('Correlation at %d: %1.4f'%(i, correlation_scores[i][1]))
+            if correlation_scores[i][1] > 0.9:
+                return correlation_scores[i]
+    else:
+        i = 0
     
     if rem != 0:
         piece_samples = (samples[0][i*divisor : (i*divisor)+rem], samples[1][i*divisor : (i*divisor)+rem])
