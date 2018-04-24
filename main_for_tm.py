@@ -57,14 +57,10 @@ def main():
     
     # Check percentage overlap
     transformed_samples = ftm.get_transformed_pix(template, min_center_2, min_degree_2, 6000)
+    denom = len(transformed_samples[0])
+    num = np.sum( (im[transformed_samples] == 255).astype(int))
     
-    overlap = np.sum( (im[transformed_samples] == 255).astype(int))
-    
-    cropped = im[int(min_center_2[0]-rows_t/2) : int(min_center_2[0]+rows_t/2), int(min_center_2[1]-cols_t/2) : int(min_center_2[1]+cols_t/2)]
-    cropped = cropped[rows_t/4:3*rows_t/4, cols_t/4:3*cols_t/4]
-    normalizer = np.sum( (cropped == 255).astype(int) )
-    per_overlap = overlap/float(normalizer)
-    
+    overlap = num/float(denom)
     
     t1 = time.time()
     
@@ -78,11 +74,11 @@ def main():
     print ("Translation 2: %d, %d"%(abs(center[0]-min_center_2[0]), abs(center[1]-min_center_2[1]) ) )
     print ("Runtime: %2.5f"%float(t1-t0))
     
-    print ('Number of white pixels used: %d'%normalizer)
-    print ('Overlapping white pixels: %d'%overlap)
-    print ('Overlap: %1.4f'%per_overlap)
+    print ('Number of white pixels used: %d'%denom)
+    print ('Overlapping white pixels: %d'%num)
+    print ('Overlap: %1.4f'%overlap)
     
-    if corr_2 >= 0.75:
+    if corr_2 >= 0.7 & overlap >= 0.4:
         print ('Yes\n')
     else:
         print ('No\n')
