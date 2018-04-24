@@ -136,8 +136,8 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
 
 def correlation_fast_pieces_main(im, template, t_mats):
     samples = np.where(template == 255)
-    divisor = 2000
-    limit = 8000
+    divisor = 3000
+    limit = 6000
     if len(samples[0]) >= limit:
         
         # Limit to 8000 white pixels
