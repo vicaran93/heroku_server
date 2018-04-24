@@ -135,6 +135,52 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
     return min_center, min_degree, min_score
 
 
+def correlation_fast_pieces_main(im, template, t_mats):
+    samples = np.where(template == 255)
+    print ('Number of white pix: %d'%len(samples[0]))
+    if len(samples[0]) >= 8000:
+        
+        # Limit to 8000 white pixels
+        samples = (samples[0][0:8000], samples[1][0:8000])
+        div = 8; rem = 0
+    else: # Had less than 8000 pixels
+        div, rem = divmod(len(samples[0]), 2000)
+    
+    # How many pieces of 2000 white samples we want to use
+    correlation_scores = {}
+    for i in range(div):
+        piece_samples = (samples[0][i*2000 : (i+1)*2000], samples[1][i*2000 : (i+1)*2000])
+        correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
+        if correlation_scores[i] > 0.9:
+            return correlation_scores[i]
+    
+    if rem != 0:
+        piece_samples = (samples[0][i*2000 : (i*2000)+rem], samples[1][i*2000 : (i*2000)+rem])
+        correlation_scores[i+1] = correlation_fast_pieces(im, t_mats, piece_samples)
+        
+    return max(correlation_scores.values(), key = lambda x: x[1])
+        
+
+def correlation_fast_pieces(im, t_mats, samples):
+    rows_im, cols_im = im.shape
+    
+    # Get white pixel locations
+    samples = np.array([samples[0], samples[1], np.array(len(samples[0])*[1])])
+    
+    # Transformed pixels
+    transformed_samples = np.around( np.dot(t_mats, samples) )
+    transformed_samples = transformed_samples[:, 0:2, :]
+    transformed_samples = [ (transformed_samples[i, 0, :].astype(np.int32), transformed_samples[i, 1, :].astype(np.int32)) for i in range(transformed_samples.shape[0])]
+
+    # Correlation calculation
+    ind, correlation = max( [(i, np.sum( (im[transformed_samples[i]] == 255).astype(int) )) for i in range(t_mats.shape[0])], key= lambda k: k[1] )
+    normalizer = len(samples[0])
+    if correlation != 0:
+        correlation /= np.sqrt(normalizer*correlation)
+
+    return ind, correlation
+
+
 def get_center(path):
     cent = path.split('/')
     cent = cent[-1]
