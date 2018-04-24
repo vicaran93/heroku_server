@@ -40,6 +40,7 @@ def main():
     t0 = time.time()
     ind, corr_1 = ftm.correlation_fast_pieces_main(im, template, t_mats)
     
+    print ('Total: %d'%(len(data['transformations'])))
     # Best results for first round
     min_center_1, min_degree_1 = data['transformations'][ind]
     
@@ -49,19 +50,11 @@ def main():
     centers = ftm.get_centers(min_center_1, 5, 1)
     t_mats, transformations = ftm.create_apt_mat(template, centers, rotations, path_to_tmat_1, False)
     
+    print ('Second round of centers: %d; Rotations: %d; Total: %d'%(len(centers), len(rotations), len(centers)*len(rotations)) )
+    
     ind, corr_2 = ftm.correlation_fast_pieces_main(im, template, t_mats)
     # Best results for second round
     min_center_2, min_degree_2 = transformations[ind]
-    
-    # Check percentage overlap
-#    transformed_samples = ftm.get_transformed_pix(template, min_center, min_degree)
-#    overlap = np.sum( (im[transformed_samples] == 255).astype(int))
-#    im = ftm.rotate_image(im, min_center, -min_degree)
-#    
-#    # Crop image
-#    im = im[int(min_center[0]-rows_t/2) : int(min_center[0]+rows_t/2), int(min_center[1]-cols_t/2) : int(min_center[1]+cols_t/2)]
-#    normalizer = np.sum( (im == 255).astype(int) )
-#    per_overlap = overlap/float(normalizer)
     
     t1 = time.time()
     

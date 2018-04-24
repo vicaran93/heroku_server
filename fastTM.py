@@ -138,9 +138,10 @@ def correlation_fast_pieces_main(im, template, t_mats):
     samples = np.where(template == 255)
     divisor = 1000
     limit = 1000
+    
     if len(samples[0]) >= limit:
-        
-        # Limit to 8000 white pixels
+        print ('Number of white pix: %d'%len(samples[0]))
+        # Limit number of white pixels
         samples = (samples[0][0:limit], samples[1][0:limit])
         div = int(limit/divisor); rem = 0
     else: # Had less than 8000 pixels
@@ -152,12 +153,14 @@ def correlation_fast_pieces_main(im, template, t_mats):
     for i in range(div):
         piece_samples = (samples[0][i*divisor : (i+1)*divisor], samples[1][i*divisor : (i+1)*divisor])
         correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
+        print ('Correlation at %d: %1.4f'%(i, correlation_scores[i][1]))
         if correlation_scores[i][1] > 0.9:
             return correlation_scores[i]
     
     if rem != 0:
         piece_samples = (samples[0][i*divisor : (i*divisor)+rem], samples[1][i*divisor : (i*divisor)+rem])
         correlation_scores[i+1] = correlation_fast_pieces(im, t_mats, piece_samples)
+        print ('Correlation at %d: %1.4f'%(i+1, correlation_scores[i+1][1]))
         
     return max(correlation_scores.values(), key = lambda x: x[1])
         
