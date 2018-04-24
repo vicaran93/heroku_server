@@ -60,20 +60,21 @@ def main():
     denom = len(transformed_samples[0])
     num = np.sum( (im[transformed_samples] == 255).astype(int))
     
-    print ('denom: %d'%denom)
-    print ('num: %d'%num)
+    
     overlap = num/float(denom)
     overlap = num/denom
     
-    print ('Overlap: %1.4f'%overlap)
     t1 = time.time()
     
-    print ('')
     print ("Degree 1: %1.1f; Degree 2: %1.1f"%(min_degree_1, min_degree_2))
     print ("First round: %1.5f; Second round: %1.5f"%(corr_1, corr_2))
     print ("Center 1: (%d, %d); Center 2: (%d, %d)"%(min_center_1[0], min_center_1[1], min_center_2[0], min_center_2[1]))
     print ("Translation 1: (%d, %d); Translation 2: (%d, %d)"%(abs(center[0]-min_center_1[0]), abs(center[1]-min_center_1[1]), abs(center[0]-min_center_2[0]), abs(center[1]-min_center_2[1]) ) )
     print ("Runtime: %2.5f"%float(t1-t0))
+    
+    print ('Number of white pixels used: %d'%denom)
+    print ('Overlapping white pixels: %d'%num)
+    print ('Overlap: %1.4f'%overlap)
     
 
 if __name__ == '__main__':
