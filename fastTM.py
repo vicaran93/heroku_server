@@ -138,24 +138,26 @@ def fast_template_match(im, template, centers, rotations, correlation_f=True):
 def correlation_fast_pieces_main(im, template, t_mats):
     samples = np.where(template == 255)
     print ('Number of white pix: %d'%len(samples[0]))
+    divisor = 1000
+    
     if len(samples[0]) >= 8000:
         
         # Limit to 8000 white pixels
         samples = (samples[0][0:8000], samples[1][0:8000])
         div = 8; rem = 0
     else: # Had less than 8000 pixels
-        div, rem = divmod(len(samples[0]), 2000)
+        div, rem = divmod(len(samples[0]), divisor)
     
     # How many pieces of 2000 white samples we want to use
     correlation_scores = {}
     for i in range(div):
-        piece_samples = (samples[0][i*2000 : (i+1)*2000], samples[1][i*2000 : (i+1)*2000])
+        piece_samples = (samples[0][i*divisor : (i+1)*divisor], samples[1][i*divisor : (i+1)*divisor])
         correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
         if correlation_scores[i][1] > 0.9:
             return correlation_scores[i]
     
     if rem != 0:
-        piece_samples = (samples[0][i*2000 : (i*2000)+rem], samples[1][i*2000 : (i*2000)+rem])
+        piece_samples = (samples[0][i*divisor : (i*divisor)+rem], samples[1][i*divisor : (i*divisor)+rem])
         correlation_scores[i+1] = correlation_fast_pieces(im, t_mats, piece_samples)
         
     return max(correlation_scores.values(), key = lambda x: x[1])
