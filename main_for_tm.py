@@ -25,6 +25,9 @@ def main():
         print ('Image or template not there')
         return
     
+    im = ftm.pre_process(im)
+    template = ftm.pre_process(template)
+    
     center = (im.shape[0]/2, im.shape[1]/2)
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
