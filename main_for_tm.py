@@ -9,7 +9,6 @@ def read_image_server(URL):
     f = io.imread(URL)
     return f
 
-
 def main():
     assert(len(sys.argv) == 2)
     # Where the database is
@@ -27,10 +26,12 @@ def main():
     
     im = ftm.pre_process(im)
     template = ftm.pre_process(template)
-    
-    center = (im.shape[0]/2, im.shape[1]/2)
     rows_im, cols_im = im.shape
     rows_t, cols_t = template.shape
+    
+    template = template[rows_t/4:3*rows_t/4, cols_t/4:3*cols_t/4].copy()
+    
+    center = (im.shape[0]/2, im.shape[1]/2)
     
     # Read first set of transformations
     data = ftm.read_json(path_to_tmat_1)
