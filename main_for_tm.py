@@ -65,7 +65,7 @@ def main():
     overlap = num/float(denom)
     overlap = num/denom
     
-    print 'Overlap: %1.4f'%overlap
+    print ('Overlap: %1.4f'%overlap)
     im = ftm.rotate_image(im, min_center_2, -min_degree_2)
     t1 = time.time()
     
