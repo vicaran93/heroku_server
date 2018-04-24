@@ -45,7 +45,7 @@ def main():
     
     # Second iteration!
     step_rot = 0.1
-    rotations = np.arange(-0.5+abs(min_degree_1), 0.5+abs(min_degree_1)+step_rot, step_rot)
+    rotations = np.arange(-0.5+min_degree_1, 0.5+min_degree_1+step_rot, step_rot)
     centers = ftm.get_centers(min_center_1, 5, 1)
     t_mats, transformations = ftm.create_apt_mat(template, centers, rotations, path_to_tmat_1, False)
     
