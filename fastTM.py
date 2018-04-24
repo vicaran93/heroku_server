@@ -151,7 +151,7 @@ def correlation_fast_pieces_main(im, template, t_mats):
     for i in range(div):
         piece_samples = (samples[0][i*2000 : (i+1)*2000], samples[1][i*2000 : (i+1)*2000])
         correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
-        if correlation_scores[i] > 0.9:
+        if correlation_scores[i][1] > 0.9:
             return correlation_scores[i]
     
     if rem != 0:
