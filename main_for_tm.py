@@ -75,6 +75,7 @@ def main():
     print ('Number of white pixels used: %d'%denom)
     print ('Overlapping white pixels: %d'%num)
     print ('Overlap: %1.4f'%overlap)
+    print ('')
     
 
 if __name__ == '__main__':
