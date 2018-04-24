@@ -142,9 +142,10 @@ def correlation_fast_pieces_main(im, template, t_mats):
         
         # Limit to 8000 white pixels
         samples = (samples[0][0:limit], samples[1][0:limit])
-        div = limit/divisor; rem = 0
+        div = int(limit/divisor); rem = 0
     else: # Had less than 8000 pixels
         div, rem = divmod(len(samples[0]), divisor)
+        div, rem = int(div), int(rem)
     
     # How many pieces of 2000 white samples we want to use
     correlation_scores = {}
