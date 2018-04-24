@@ -1,6 +1,5 @@
 import json
 import numpy as np
-import cv2
 
 def SAD(im, template, center, degree):
     rows_im, cols_im = im.shape
