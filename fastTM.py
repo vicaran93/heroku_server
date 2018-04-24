@@ -61,14 +61,6 @@ def create_apt_mat(template, centers, rotations, path, save = True):
         return t_mat, transformations
 
     
-def rotate_image(image, center, degree):
-    rows, cols = image.shape
-
-    M = cv2.getRotationMatrix2D(center, degree, 1)
-    dst = cv2.warpAffine(image, M, (cols,rows), flags=cv2.INTER_NEAREST)
-    return dst
-   
-
 def read_json(path):
     with open(path, 'r') as out_file:
         data = json.load(out_file)
@@ -140,7 +132,6 @@ def correlation_fast_pieces_main(im, template, t_mats):
     limit = 1000
     
     if len(samples[0]) >= limit:
-        print ('Number of white pix: %d'%len(samples[0]))
         # Limit number of white pixels
         samples = (samples[0][0:limit], samples[1][0:limit])
         div = int(limit/divisor); rem = 0
@@ -153,14 +144,12 @@ def correlation_fast_pieces_main(im, template, t_mats):
     for i in range(div):
         piece_samples = (samples[0][i*divisor : (i+1)*divisor], samples[1][i*divisor : (i+1)*divisor])
         correlation_scores[i] = correlation_fast_pieces(im, t_mats, piece_samples)
-        print ('Correlation at %d: %1.4f'%(i, correlation_scores[i][1]))
         if correlation_scores[i][1] > 0.9:
             return correlation_scores[i]
     
     if rem != 0:
         piece_samples = (samples[0][i*divisor : (i*divisor)+rem], samples[1][i*divisor : (i*divisor)+rem])
         correlation_scores[i+1] = correlation_fast_pieces(im, t_mats, piece_samples)
-        print ('Correlation at %d: %1.4f'%(i+1, correlation_scores[i+1][1]))
         
     return max(correlation_scores.values(), key = lambda x: x[1])
         
@@ -214,18 +203,35 @@ def pre_process(im):
     return im   
     
 
-def get_transformed_pix(template, center, degree, limit = 1000):
+def get_transformed_pix(template, center, degree, limit=1000):
     rows_t, cols_t = template.shape
     
     # Get white pixel locations
     samples = np.where(template == 255)
     rad = degree*np.pi/180. 
-
+    
     # Limit number of white pixels
     if len(samples[0]) > limit:
-        indices = np.random.randint(0, len(samples[1]), size=limit)
-        samples = (samples[0][indices], samples[1][indices])
-        
+        samples = (samples[0][0:limit], samples[1][0:limit])
+    
+    t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
+
+    transformed_samples = np.around(np.dot(t_mat, np.array([samples[0], samples[1], len(samples[1])*[1]])))
+    transformed_samples = (np.array(transformed_samples[0, :], dtype=np.int64), np.array(transformed_samples[1, :], dtype=np.int64))
+    return transformed_samples
+    
+
+def get_black_pix(template, center, degree, limit=1000):
+    rows_t, cols_t = template.shape
+    
+    # Get white pixel locations
+    samples = np.where(template == 0)
+    rad = degree*np.pi/180. 
+    
+    # Limit number of white pixels
+    if len(samples[0]) > limit:
+        samples = (samples[0][0:limit], samples[1][0:limit])
+    
     t_mat = np.array([[np.cos(rad), -np.sin(rad), center[0] - int(rows_t/2)], [np.sin(rad), np.cos(rad), center[1] - int(cols_t/2)]])
 
     transformed_samples = np.around(np.dot(t_mat, np.array([samples[0], samples[1], len(samples[1])*[1]])))
