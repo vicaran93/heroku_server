@@ -139,12 +139,12 @@ def correlation_fast_pieces_main(im, template, t_mats):
     samples = np.where(template == 255)
     print ('Number of white pix: %d'%len(samples[0]))
     divisor = 1000
-    
-    if len(samples[0]) >= 8000:
+    limit = 6000
+    if len(samples[0]) >= limit:
         
         # Limit to 8000 white pixels
-        samples = (samples[0][0:8000], samples[1][0:8000])
-        div = 8; rem = 0
+        samples = (samples[0][0:limit], samples[1][0:limit])
+        div = limit/divisor; rem = 0
     else: # Had less than 8000 pixels
         div, rem = divmod(len(samples[0]), divisor)
     
