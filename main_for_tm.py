@@ -76,9 +76,9 @@ def main():
     
     print ('Number of white pixels used: %d'%denom)
     print ('Overlapping white pixels: %d'%num)
-    print ('Overlap: %1.4f'%overlap)
+    print ('Percent Overlap: %1.4f'%overlap)
     
-    if corr_2 >= 0.7 & overlap >= 0.4:
+    if corr_2 >= 0.7 and overlap >= 0.4:
         print ('Yes\n')
     else:
         print ('No\n')
